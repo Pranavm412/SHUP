@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<div class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto my-5 p-5">
+        <div class="md:flex no-wrap md:-mx-2 ">
+            <!-- Left Side -->
+            <div class="w-full md:w-3/12 md:mx-2">
+                <!-- Profile Card -->
+                <div class="bg-white p-3 border-t-4 border-green-400">
+
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 mt-1">{{user.first_name|add:" "|title}}{{user.last_name|title}}</h1>
+                    <h3 class="text-gray-600 font-lg text-semibold leading-6 -mt-1 mb-1">@{{ user.username }}</h3>
+                    <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Total Orders: {{ total_orders }} </p>
+                    <ul
+                        class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                        <li class="flex items-center py-3">
+                            <span>Last Login</span>
+                            <span class="ml-auto">{{ user.last_login|date:'d-M-Y'|upper }}</span>
+                        </li>
+                        <li class="flex items-center py-3">
+                            <span>Member Since</span>
+                            <span class="ml-auto">{{ user.date_joined|date:'d-M-Y'|upper }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End of profile card -->
+                <div class="my-4"></div>
+            </div>
+            <!-- Right Side -->
+            <div class="w-full md:w-9/12 mx-2 h-64">
+                <!-- Profile tab -->
+                <!-- About Section -->
+                <div class="bg-white p-3 shadow-sm rounded-sm">
+                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                        <span clas="text-green-500">
+                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </span>
+                        <span class="tracking-wide">About</span>
+                    </div>
+                    <div class="text-gray-700">
+                        <div class="grid md:grid-cols-2 text-sm">
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">First Name</div>
+                                <div class="px-4 py-2">{{ user.first_name|title }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Last Name</div>
+                                <div class="px-4 py-2">{{ user.last_name|title }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Username</div>
+                                <div class="px-4 py-2">{{ user.username }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Phone Number</div>
+                                <div class="px-4 py-2">{{ user.phone_number }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Address Line</div>
+                                <div class="px-4 py-2">{{ user.address_line_1|capfirst }}, {{ user.address_line_2|capfirst }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">State</div>
+                                <div class="px-4 py-2">{{ user.state|title }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">City</div>
+                                <div class="px-4 py-2">{{ user.city }}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Email</div>
+                                <div class="px-4 py-2">{{ user.email }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center"><a class="block bg-red-500 text-white text-sm font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4 px-10" href="{% url 'logout' %}">Logout</a></div>
+                </div>
+                <!-- End of about section -->
+
+                <div class="my-4"></div>
+
+                <!-- Experience and education -->
+                <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                    <div class="">
+                        <div>
+                            <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3 pl-10 pt-4">
+                                <span clas="text-green-500">
+                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </span>
+                                <span class="tracking-wide">Orders</span>
+                                <span class="pl-20 text-blue-500 text-xs"><a href="{% url 'orders' %}">View all>></a></span>
+                            </div>
+                            <ul class="flex flex-wrap grid grid-cols-6 gap-y-4 list-inside space-y-2 px-8 pt-4 pb-8">
+                                {% for order in orders %}
+                                {% if forloop.counter <= 12 %}
+                                <li>
+                                    <div class="text-teal-600 -mb-1">Order No.</div>
+                                    <div class="text-teal-600 mb-1">{{order.order_number}}</div>
+                                    <div class="text-gray-500 text-xs">Date: {{ order.created_at|date:'d-M-Y' }}</div>
+                                    <div class="text-gray-500 text-xs">Total: {{ order.order_total }}</div>
+                                    <div class="text-gray-500 text-xs">Status: {{ order.status }}</div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End of Experience and education grid -->
+                </div>
+                <!-- End of profile tab -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

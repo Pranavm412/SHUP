@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ========================= SECTION MAIN ========================= -->
+{% if messages %}
+<div class="">
+    {% for message in messages %}
+    <div class="p-4 mb-15 text-white rounded-lg 
+        {% if message.tags == 'error' %} bg-red-500 {% elif message.tags == 'success' %} bg-green-500 {% else %} bg-blue-500 {% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="flex justify-center w-full h-full my-10 -z-1">
+    <div class="bg-gradient-to-r from-black to-gray-800 w-[95vw] h-[60vh] -z-1 shadow-xl shadow-gray-500">
+        <div class="w-2/4 h-full relative -z-1">
+            <div class="absolute top-2/4 left-1/4 flex flex-col -mt-14 space-y-4 text-white">
+                <div><h1 class="z-3 text-7xl font-bold">SHUP</h1></div>
+                <div class="z-3 text-2xl">Your go-to gift shop for all kinds of occasions</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+
+<div class="w-full">
+    <div class="mx-10 py-5">
+        <div class="flex justify-between relative px-15 rounded-lg">
+            <span class="text-3xl text-black font-bold">New Products</span>
+            <a href="{% url 'store' %}" class="font-bold text-blue-400 hover:text-gray-300 absolute right-5 translate-y-1/3">See All >></a>
+        </div>
+        <div class="flex justify-between bg-white p-10 rounded-lg shadow-lg shadow-gray-400 mt-5">
+            <div class="flex flex-wrap justify-between justify-center items-center gap-8 grid grid-cols-5">
+                {% for product in products reversed %}
+                {% if forloop.counter < 6 %}
+                <div class="transform transition duration-300 hover:scale-105">
+                    <div class="bg-white max-w-sm rounded-lg shadow-xl hover:shadow-2xl transition duration-300">
+                        <a href="{{ product.get_url }}" class=""> <img src="{{ product.images.url }}" class="rounded-t-lg h-[35vh] w-full object-cover shadow-xl"> </a>
+                        <figcaption class="p-5">
+                            <a href="{{ product.get_url }}" class="card-header text-l font-bold text-gray-900">{{product.product_name}}</a>
+                            <div class="text-gray-8">Rs. {{product.price}}</div>
+                        </figcaption>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="mx-10 py-5">
+        <div class="flex justify-between relative px-15 rounded-lg">
+            <span class="text-3xl text-black font-bold">About Us</span>
+            <a href="{% url 'aboutus' %}" class="font-bold text-blue-400 hover:text-gray-300 absolute right-5 translate-y-1/3">See More >></a>
+        </div>
+        <div class="flex justify-between bg-black p-5 rounded-lg shadow-xl shadow-gray-500 mt-5">
+            <div class="flex flex-wrap-center items-center grid grid-cols-[35%_65%] h-[50vh]">
+                <div class="flex justify-center">
+                    <img src="{% static 'images/logo.png' %}" alt="" class="pl-10 w-[70vh]">
+                </div>
+                <div class="px-15 flex flex-col space-y-12 text-white">
+                    <div class="font-bold text-7xl">SHUP</div>
+                    <div class="text-2xl">SHUP INDIA is a sales company, following the principles of Drop-Shipping. SHUP INDIA aims at providing the best products at the lowest rates.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- ========================= SECTION  END// ========================= -->

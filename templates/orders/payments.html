@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="bg-gray-100 py-10">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-semibold text-center mb-6">Review Your Order and Make Payment</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Billing Address -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold mb-4">Billing Address</h3>
+                <p>{{ order.full_name }}</p>
+                <p>{{ order.full_address }}</p>
+                <p>{{ order.city }}, {{ order.state }}</p>
+                <p>{{ order.email }}</p>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>Total Price:</span>
+                        <span class="font-semibold">Rs. {{ total }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Tax:</span>
+                        <span class="font-semibold">Rs. {{ tax }}</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-bold">
+                        <span>Grand Total:</span>
+                        <span>Rs. {{ grand_total }}</span>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-center">
+                    <button id="pay-btn" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Pay with Razorpay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key }}", 
+        "amount": "{{ grand_total|floatformat:2 }}", 
+        "currency": "INR",
+        "name": "SHUP",
+        "description": "Order Payment",
+        "order_id": "{{ razorpay_order_id }}",
+        "handler": function (response) {
+            fetch("{% url 'payments' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    transID: response.razorpay_payment_id,
+                    orderID: "{{ order.order_number }}",
+                    payment_method: "UPI",
+                    status: "Completed"
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("Payment failed!");
+                } else {
+                    window.location.href = "{% url 'order_complete' %}?order_number=" + data.order_number + "&payment_id=" + data.transID;
+                }
+            });
+        },
+        "prefill": {
+            "name": "{{ order.first_name }} {{ order.last_name }}",
+            "email": "{{ order.email }}",
+            "contact": "{{ order.phone }}"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('pay-btn').onclick = function(e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock %}

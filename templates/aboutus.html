@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="relative bg-gray-50 py-24 sm:py-32 min-h-screen -z-1">
+    <!-- Mission, Vision, and Values Section -->
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Mission, Vision, and Values</h2>
+        <p class="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+            We are a passionate team dedicated to delivering excellence. Our mission is to innovate and create impact.
+        </p>
+    </div>
+
+    <div class="mt-16 max-w-6xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300">
+                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Our Mission</h4>
+                <p class="text-gray-600">To provide high-quality, trending, and affordable products worldwide through a seamless online shopping experience—without the hassle of inventory management—ensuring customer satisfaction and convenience at every step.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300">
+                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Our Vision</h4>
+                <p class="text-gray-600">To become the go-to global destination for unique and in-demand products, leveraging innovation, automation, and a customer-first approach to redefine e-commerce.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300">
+                <h4 class="text-2xl font-semibold text-gray-900 mb-4">Our Values</h4>
+                <p class="text-gray-600">Customer-centricity, quality assurance, transparency, innovation, and sustainability drive our commitment to delivering a seamless and ethical dropshipping experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add the map frame here -->
+    <div class="mt-16 max-w-6xl mx-auto">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Find Us Here</h3>
+        <div class="w-full h-64">
+            <iframe
+             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.147518651873!2d77.59386127585708!3d12.962410715078112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15d9fddb0f15%3A0xdec852132523ceae!2sSt%20Joseph&#39;s%20University!5e0!3m2!1sen!2sin!4v1740428264388!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                style="border:0;"
+                allowfullscreen=""
+                aria-hidden="false"
+                tabindex="0">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Our Team Section -->
+    <div class="mt-16 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Our Team</h2>
+        <p class="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+            We are a passionate team dedicated to delivering excellence. Our mission is to innovate and create impact.
+        </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 flex flex-col items-center justify-center">
+            <h3 class="mt-4 text-xl font-semibold text-gray-900">Mahek Chauhan</h3>
+            <p class="text-indigo-600 text-sm font-medium">Chief Operating Officer</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 flex flex-col items-center justify-center">
+            <h3 class="mt-4 text-xl font-semibold text-gray-900">Priyansh Raisinghani</h3>
+            <p class="text-indigo-600 text-sm font-medium">Co-Founder</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 flex flex-col items-center justify-center">
+            <h3 class="mt-4 text-xl font-semibold text-gray-900">Kanan Lalwani</h3>
+            <p class="text-indigo-600 text-sm font-medium">Chief Marketing Officer</p>
+        </div>
+
+        <!-- More team members can be added here with the same structure -->
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Order Details</h1>
+
+    {% for order_data in orders_with_items %}
+    {% if order_data.items %}
+    <div class="border border-gray-300 rounded-lg p-6 bg-white shadow-md mb-6">
+        <!-- Order Summary -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold">Order #{{ order_data.order.order_number }}</h2>
+            <p class="text-gray-600">Placed on: {{ order_data.order.created_at|date:'d-M-Y' }}</p>
+            <p class="text-sm {% if order_data.order.status == 'Delivered' %}text-green-600{% elif order_data.order.status == 'Cancelled' %}text-red-600{% else %}text-blue-600{% endif %}">
+                Status: {{ order_data.order.status }}
+            </p>
+        </div>
+
+        <!-- Items List -->
+        <div class="border-t border-gray-300 pt-4">
+            {% for item in order_data.items %}
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <img src="{{ item.product.images.url }}" alt="{{ item.name }}" class="w-20 h-20 rounded-lg mr-4">
+                    <div>
+                        <p class="font-medium">{{ item.product.product_name }}</p>
+                        <p class="text-sm text-gray-600">Qty: {{ item.quantity }} | ₹{{ item.product.price }}</p>
+                    </div>
+                </div>
+                <span class="font-semibold">₹{% widthratio item.quantity 1 item.product.price %}</span>
+            </div>
+            {% empty %}
+            <p class="text-gray-500">No items in this order.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Total Price -->
+        <div class="border-t border-gray-300 mt-4 pt-4 flex flex-col items-end justify-between">
+            <span class="text-md font-semibold">Tax (15%): ₹{{ order_data.order.tax }}</span>
+            <span class="text-lg font-bold pt-3">Total Amount:  ₹{{ order_data.order.payment.amount_paid }}</span>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Order Details</h1>
+
+    <div class="border border-gray-300 rounded-lg p-6 bg-white shadow-md">
+        <!-- Order Summary -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold">Order #{{ order.id }}</h2>
+            <p class="text-gray-600">Placed on: {{ order.date }}</p>
+            <p class="text-sm {% if order.status == 'Delivered' %}text-green-600{% elif order.status == 'Cancelled' %}text-red-600{% else %}text-blue-600{% endif %}">
+                Status: {{ order.status }}
+            </p>
+        </div>
+
+        <!-- Items List -->
+        <div class="border-t border-gray-300 pt-4">
+            {% for item in order.items %}
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <img src="{{ item.image_url }}" alt="{{ item.name }}" class="w-20 h-20 rounded-lg mr-4">
+                    <div>
+                        <p class="font-medium">{{ item.name }}</p>
+                        <p class="text-sm text-gray-600">Qty: {{ item.quantity }} | ₹{{ item.price }}</p>
+                    </div>
+                </div>
+                <span class="font-semibold">₹{{ item.total_price }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Total Price -->
+        <div class="border-t border-gray-300 mt-4 pt-4 flex justify-between">
+            <span class="text-lg font-semibold">Total Amount:</span>
+            <span class="text-lg font-bold">₹{{ order.total_price }}</span>
+        </div>
+
+        <!-- Actions -->
+        
+    </div>
+</div>
+
+{% endblock %}

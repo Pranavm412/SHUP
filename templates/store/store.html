@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+
+<!-- ========================= SECTION INTRO END// ========================= -->
+
+<!-- ========================= SECTION CONTENT ========================= -->
+
+<div class="bg-white">
+	<div>
+	  <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+  
+		<div class="fixed inset-0 z-40 flex">
+		  <div class="relative ml-auto flex size-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+			<div class="flex items-center justify-between px-4">
+			  <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+			  <button type="button" class="-mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
+				<span class="sr-only">Close menu</span>
+				<svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+				  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+				</svg>
+			  </button>
+			</div>
+  
+			<!-- Filters -->
+		  </div>
+		</div>
+	  </div>
+  
+	  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+			{% if 'search' in request.path %}
+		  <h1 class="text-4xl font-bold tracking-tight text-gray-900">Search Results</h1>
+		  {% else %}
+		  <h1 class="text-4xl font-bold tracking-tight text-gray-900">Our Store</h1>
+		  {% endif %}
+		</div>
+  
+		<section aria-labelledby="products-heading" class="pt-6 pb-24">
+		  <h2 id="products-heading" class="sr-only">Products</h2>
+  
+		  <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+			<!-- Filters -->
+			<form class="hidden lg:block">
+			  <h3 class="pb-4 font-bold text-xl">Categories</h3>
+			  <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+				<li><a href="{% url 'store' %}">All Products</a></li>
+				{% for category in links %}
+				<li>
+					<a href="{{ category.get_url }}">{{ category.category_name }}</a>
+				  </li>
+                  {% endfor %}
+			  </ul>
+			</form>
+  
+			<!-- Product grid -->
+			<div class="lg:col-span-3">
+			<div class="flex flex-wrap justify-between justify-center items-center gap-8 grid grid-cols-3">
+				{% if products %}
+				{% for product in products %}
+				<div class="">
+					<figure class="max-w-sm rounded-lg border border-gray-200 shadow-xl">
+						<div class="">
+			
+							<a href="{{ product.get_url }}"><img src="{{ product.images.url }}" class="rounded-t-lg h-[35vh] w-full shadow-sm"></a>
+			
+						</div><!-- img-wrap.// -->
+						<figcaption class="p-5">
+							<div class="">
+								<a href="{{ product.get_url }}" class="font-bold title">{{ product.product_name }}</a>
+								<div class="">
+									<span class="price">Rs. {{ product.price }}</span>
+								</div> <!-- price-wrap.// -->
+							</div>
+							<a href="{{ product.get_url }}" class="text-sm hover:text-blue-600">View Details </a>
+						</figcaption>
+					</figure>
+				</div> <!-- col.// -->
+				{% endfor %}
+				{% else %}
+				<div>
+					<h2>No result found. Please try again.</h2>
+				</div>
+				{% endif %}
+			</div>
+			<div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 pt-6 sm:px-6">
+				<div class="flex flex-1 justify-between sm:hidden">
+				  <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+				  <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+				</div>
+				<div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+				  <div>
+					<p class="text-sm text-gray-700">
+					  Showing
+					  <span class="font-medium">{{products.start_index}}</span>
+					  to
+					  <span class="font-medium">{{products.end_index}}</span>
+					  of
+					  <span class="font-medium">{{product_count}}</span>
+					  results
+					</p>
+				  </div>
+				  <div>
+					{% if products.has_other_pages %}
+					<nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+						{% if products.has_previous %}
+					  <a href="?page={{products.previous_page_number}}" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+						<span class="sr-only">Previous</span>
+						<svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+						  <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+						</svg>
+					  </a>
+					  {% else %}
+			          <a href="#" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 pointer-events-none cursor-events-none" aria-disabled="true">
+						<span class="sr-only">Previous</span>
+						<svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+						  <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+						</svg>
+					  </a>
+			          {% endif %}
+					  {% for i in products.paginator.page_range %}
+					  {% if products.number == i %}
+					  <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{i}}</a>
+					  {% else %}
+					  <a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0" href="?page={{i}}">{{i}}</a>
+					  {% endif %}
+			          {% endfor %}
+					  {% if products.has_next %}
+					  <a href="?page={{products.next_page_number}}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+						<span class="sr-only">Next</span>
+						<svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+						  <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+						</svg>
+					  </a>
+			          {% else %}
+					  <a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 pointer-events-none cursor-events-none">
+						<span class="sr-only">Next</span>
+						<svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+						  <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+						</svg>
+					  </a>
+			          {% endif %}
+					{% endif %}
+					</nav>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</section>
+	  </main>
+	</div>
+  </div>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}
